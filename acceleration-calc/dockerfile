@@ -1,0 +1,11 @@
+FROM node:10.14.2-slim
+RUN useradd -m -s /bin/false acceleration-calc && chown -R acceleration-calc:acceleration-calc /home/acceleration-calc && chmod -R 755 /home/acceleration-calc
+WORKDIR /home/acceleration-calc
+USER acceleration-calc
+ENV WEB_PORT 3000
+EXPOSE 3000
+COPY server ./server/
+COPY yarn.lock *.json ./
+RUN yarn install && yarn build
+ENTRYPOINT ["yarn"]
+CMD ["start"]

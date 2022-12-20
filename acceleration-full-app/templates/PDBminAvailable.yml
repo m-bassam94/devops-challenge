@@ -1,0 +1,9 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "acceleration-full-app.fullname" . }}-PDBminAvailable
+spec:
+  minAvailable: {{ .Values.PDBminAvailable.minAvailable }}
+  selector:
+    matchLabels:
+      {{- include "acceleration-full-app.selectorLabels" . | nindent 6 }}

@@ -1,0 +1,11 @@
+FROM node:10.14.2-slim
+RUN useradd -m -s /bin/false acceleration-a && chown -R acceleration-a:acceleration-a /home/acceleration-a && chmod -R 755 /home/acceleration-a
+WORKDIR /home/acceleration-a
+USER acceleration-a
+ENV WEB_PORT 3002
+EXPOSE 3002
+COPY server ./server/
+COPY .env yarn.lock *.json ./
+RUN yarn install && yarn build
+ENTRYPOINT ["yarn"]
+CMD ["start"]
